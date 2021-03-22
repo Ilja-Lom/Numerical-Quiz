@@ -1,0 +1,78 @@
+import random, operator
+
+def Start():
+        database = input("To proceed with questionnaire, enter 1. To access the database, enter 2 ")
+        if database == "1":
+                Loop()
+        if database == "2":
+                Database()
+
+def Database():
+        print("If you wish to exit the database, enter ' Exit '.")
+        Database2()
+
+
+def Database2():
+        password = input("Enter the database password ")
+        if password == "School":
+                Database3()
+
+        if password == "Exit":
+                Loop()
+
+
+        if password != "School":
+                print("Wrong password!")
+                Database2()
+                
+def Loop():
+        score = 0
+        loop = 1
+        print("Questionnaire")
+        print()
+        name = input("What is your name? ")
+        print()
+        Name = name.title()
+        print("Hello",Name,"! " "Welcome to the basic arithmetic questionnaire")
+
+        for loop in range (10):
+
+                num1 = random.randrange(0,10)
+                num2 = random.randrange(1,10)
+
+                ops = ['+', '-', '*', '/']
+
+                op = random.choice(ops)
+
+                question = ("{}{}{}".format(num1, op, num2))
+                correct_answer = eval("{}{}{}".format(num1, op, num2))
+                print(correct_answer)
+
+                answer = float(input(question + " "))
+                if answer == correct_answer:
+                        print("You're right")
+                        score +=1
+                        print("Score =", score)
+                        loop +=1
+
+                else:
+                        print("You're wrong")
+                        print("Score =", score)
+                        print("The answer is...", correct_answer)
+                        loop +=1
+
+        print()
+        print("The questionnaire has ended, the scores will be sent to your teacher")
+
+        DB_write = open('DB.txt', 'a')
+        DB_write.write("{}".format(score))
+        DB_write.close()
+                
+
+
+def Database3():
+        database = open('DB.txt', 'r')
+        print("The scores:")
+        print (database.read())
+
+Start()
